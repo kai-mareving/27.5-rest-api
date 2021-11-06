@@ -20,39 +20,40 @@ router.route('/seats/:id').get((req, res) => {
 router.route('/seats').post((req, res) => {
   const { day, seat, client, email } = req.body;
   const nextId = db.seats.length + 1;
-  db.seats.push(
-    {
-      id: nextId, day: day, seat: seat,
-      client: client, email: email
-    }
-  );
-  // res.json(db.seats);
-  res.json({ message: 'OK. Seat added' });
+  if (!day || !seat || !client || !email) {
+    res.status(400).json({ message: 'Validation error! You need to supply day, seat, client and email to add a seat' });
+    return;
+  } else {
+    db.seats.push(
+      {
+        id: nextId, day: day, seat: seat,
+        client: client, email: email
+      }
+    );
+    res.json({ message: 'OK. Seat added' });}
 });
 
 router.route('/seats/:id').put((req, res) => {
   const { day, seat, client, email } = req.body;
   const edited = db.seats[req.params.id - 1];
-  if(day){
-    edited.day = day;
+
+  if (!day && !seat && !client && !email) {
+    res.status(400).json({ message: 'Validation error! You need to supply either a day, seat, client or email to edit a seat' });
+    return;
   }
-  if(seat){
-    edited.seat = seat;
-  }
-  if(client){
-    edited.client = client;
-  }
-  if(email){
-    edited.email = email;
-  }
-  // res.json(db.seats);
-  res.json({ message: 'OK. Seat changed' });
+
+  if (day) { edited.day = day; }
+  if (seat) { edited.seat = seat; }
+  if (client) { edited.client = client; }
+  if (email) { edited.email = email; }
+
+  res.json({ message: `OK. Seat ${req.params.id} changed` });
 });
 
 router.route('/seats/:id').delete((req, res) => {
   db.seats = db.seats.filter((seat) => seat.id != req.params.id);
   //or db.seats.splice((req.params.id - 1), 1);
-  res.json({ message: 'OK. Seat deleted' });
+  res.json({ message: `OK. Seat ${req.params.id} deleted` });
 });
 
 module.exports = router;

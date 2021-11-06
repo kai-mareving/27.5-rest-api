@@ -20,22 +20,29 @@ router.route('/testimonials/:id').get((req, res) => {
 router.route('/testimonials').post((req, res) => {
   const { author, text } = req.body;
   const nextId = db.testimonials.length + 1;
-  db.testimonials.push({id: nextId, author: author, text: text });
-  // res.json(db.testimonials);
-  res.json({ message: 'OK. Testimonial added' });
+
+  if (!author || !text) {
+    res.status(400).json({ message: 'Validation error! You need to supply author and text to add a testimonial' });
+    return;
+  } else {
+    db.testimonials.push({ id: nextId, author: author, text: text });
+    // res.json(db.testimonials);
+    res.json({ message: 'OK. Testimonial added' });
+  }
 });
 
 router.route('/testimonials/:id').put((req, res) => {
   const { author, text } = req.body;
   const edited = db.testimonials[req.params.id - 1];
-  if(author){
-    edited.author = author;
+
+  if (!author && !text) {
+    res.status(400).json({ message: 'Validation error! You need to supply either author or text to change testimonial' });
+    return;
   }
-  if(text){
-    edited.text = text;
-  }
+  if (author) { edited.author = author; }
+  if(text){ edited.text = text; }
   // res.json(db.testimonials);
-  res.json({ message: 'OK. Testimonial changed' });
+  res.status(200).json({ message: 'OK. Testimonial changed' });
 });
 
 router.route('/testimonials/:id').delete((req, res) => {
