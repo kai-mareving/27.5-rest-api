@@ -24,11 +24,17 @@ router.route('/testimonials').post((req, res) => {
   if (!author || !text) {
     res.status(400).json({ message: 'Validation error! You need to supply author and text to add a testimonial' });
     return;
-  } else {
-    db.testimonials.push({ id: nextId, author: author, text: text });
-    // res.json(db.testimonials);
-    res.json({ message: 'OK. Testimonial added' });
   }
+
+  db.testimonials.push(
+    {
+      id: nextId,
+      author: author,
+      text: text
+    }
+  );
+  // res.json(db.testimonials);
+  res.json({ message: 'OK. Testimonial added' });
 });
 
 router.route('/testimonials/:id').put((req, res) => {
@@ -36,7 +42,10 @@ router.route('/testimonials/:id').put((req, res) => {
   const edited = db.testimonials[req.params.id - 1];
 
   if (!author && !text) {
-    res.status(400).json({ message: 'Validation error! You need to supply either author or text to change testimonial' });
+    res.status(400)
+      .json({
+        message: 'Validation error! You need to supply either author or text to change testimonial'
+      });
     return;
   }
   if (author) { edited.author = author; }

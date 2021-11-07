@@ -20,17 +20,25 @@ router.route('/seats/:id').get((req, res) => {
 router.route('/seats').post((req, res) => {
   const { day, seat, client, email } = req.body;
   const nextId = db.seats.length + 1;
+
   if (!day || !seat || !client || !email) {
-    res.status(400).json({ message: 'Validation error! You need to supply day, seat, client and email to add a seat' });
+    res
+      .status(400)
+      .json({
+        message:
+          'Validation error! You need to supply day, seat, client and email to add a seat',
+      });
     return;
-  } else {
-    db.seats.push(
-      {
-        id: nextId, day: day, seat: seat,
-        client: client, email: email
-      }
-    );
-    res.json({ message: 'OK. Seat added' });}
+  }
+
+  db.seats.push({
+    id: nextId,
+    day: day,
+    seat: seat,
+    client: client,
+    email: email,
+  });
+  res.json({ message: 'OK. Seat added' });
 });
 
 router.route('/seats/:id').put((req, res) => {
@@ -38,7 +46,10 @@ router.route('/seats/:id').put((req, res) => {
   const edited = db.seats[req.params.id - 1];
 
   if (!day && !seat && !client && !email) {
-    res.status(400).json({ message: 'Validation error! You need to supply either a day, seat, client or email to edit a seat' });
+    res.status(400)
+      .json({
+        message: 'Validation error! You need to supply either a day, seat, client or email to edit a seat',
+      });
     return;
   }
 

@@ -22,17 +22,24 @@ router.route('/concerts').post((req, res) => {
   const nextId = db.concerts.length + 1;
 
   if (!performer || !genre || !price || !day || !image) {
-    res.status(400).json({ message: 'Validation error! You need to supply performer, genre, price, day and image to add a concert' });
+    res
+      .status(400)
+      .json({
+        message:
+          'Validation error! You need to supply performer, genre, price, day and image to add a concert',
+      });
     return;
-  } else {
-    db.concerts.push(
-      {
-        id: nextId, performer: performer, genre: genre,
-        price: price, day: day, image: image
-      }
-    );
-    res.json({ message: 'OK. Concert added' });
   }
+
+  db.concerts.push({
+    id: nextId,
+    performer: performer,
+    genre: genre,
+    price: price,
+    day: day,
+    image: image,
+  });
+  res.json({ message: 'OK. Concert added' });
 });
 
 router.route('/concerts/:id').put((req, res) => {
@@ -40,7 +47,11 @@ router.route('/concerts/:id').put((req, res) => {
   const edited = db.concerts[req.params.id - 1];
 
   if (!performer && !genre && !price && !day && !image) {
-    res.status(400).json({ message: 'Validation error! You need to supply either performer, genre, price, day or image to add a concert' });
+    res.status(400)
+      .json({
+        message:
+          'Validation error! You need to supply either performer, genre, price, day or image to add a concert',
+      });
     return;
   }
 
