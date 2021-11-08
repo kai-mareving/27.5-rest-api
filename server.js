@@ -11,12 +11,9 @@ const seatsRoutes = require('./routes/seats.routes');
 
 /* cross site domain request */
  //ASK: are additional options needed here?
-app.use(cors({
-  'origin': 'http://localhost:8000/*',
-  'methods': 'GET,POST,PUT,DELETE',
-}));
+app.use(cors());
 
-app.use(express.urlencoded({ extended: false }));
+app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
 /* ENDPOINTS */

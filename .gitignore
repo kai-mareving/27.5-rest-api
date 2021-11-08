@@ -7,6 +7,13 @@ yarn-error.log*
 lerna-debug.log*
 .pnpm-debug.log*
 
+# misc
+.DS_Store
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
 # Diagnostic reports (https://nodejs.org/api/report.html)
 report.[0-9]*.[0-9]*.[0-9]*.[0-9]*.json
 
@@ -41,6 +48,14 @@ build/Release
 # Dependency directories
 node_modules/
 jspm_packages/
+/.pnp
+.pnp.js
+
+# testing
+/coverage
+
+# production
+/build
 
 # Snowpack dependency directory (https://snowpack.dev/)
 web_modules/
