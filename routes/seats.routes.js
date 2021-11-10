@@ -28,17 +28,21 @@ router.route('/seats').post((req, res) => {
         message:
           'Validation error! You need to supply day, seat, client and email to add a seat',
       });
-    return;
-  }
 
-  db.seats.push({
-    id: nextId,
-    day: day,
-    seat: seat,
-    client: client,
-    email: email,
-  });
-  res.json({ message: 'OK. Seat added' });
+  }
+  else if (db.seats.some(item => (item.day == day && item.seat == seat))) {
+    res.status(400).send(`The slot ${seat} is already taken...`);
+  }
+  else {
+    db.seats.push({
+      id: nextId,
+      day: day,
+      seat: seat,
+      client: client,
+      email: email,
+    });
+    res.json({ message: 'OK. Seat added' });
+  }
 });
 
 router.route('/seats/:id').put((req, res) => {
