@@ -24,26 +24,20 @@ export const errorRequest = error => ({ error, type: ERROR_REQUEST });
 export const loadConcerts = payload => ({ payload, type: LOAD_CONCERTS });
 
 /* THUNKS */
-
 export const loadConcertsRequest = () => {
   return async dispatch => {
-
     dispatch(startRequest());
     try {
-
       let res = await axios.get(`${API_URL}/concerts`);
       dispatch(loadConcerts(res.data));
       dispatch(endRequest());
-
     } catch(e) {
       dispatch(errorRequest(e.message));
     }
-
   };
 };
 
 /* INITIAL STATE */
-
 const initialState = {
   data: [],
   request: {
@@ -54,7 +48,6 @@ const initialState = {
 };
 
 /* REDUCER */
-
 export default function reducer(statePart = initialState, action = {}) {
   switch (action.type) {
     case LOAD_CONCERTS:

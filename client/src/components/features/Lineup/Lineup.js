@@ -11,10 +11,9 @@ class Lineup extends React.Component {
   }
 
   render() {
-
     const { request, concerts } = this.props;
 
-    if(request.pending) return <Progress animated color="primary" value={50} />; 
+    if(request.pending) return <Progress animated color="primary" value={50} />;
     else if(request.error) return <Alert color="warning">{request.error}</Alert>;
     else if(!request.success || !concerts.length) return <Alert color="info">No concerts</Alert>;
     else if(request.success) return (
@@ -22,7 +21,6 @@ class Lineup extends React.Component {
         <Concerts concerts={concerts} />
       </>
     )
-
   }
 }
 

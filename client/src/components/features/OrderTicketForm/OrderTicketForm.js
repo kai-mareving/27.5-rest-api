@@ -61,11 +61,10 @@ class OrderTicketForm extends React.Component {
   }
 
   render() {
-
     const { updateSeat, updateTextField, updateNumberField, submitForm } = this;
     const { requests, newseat } = this.props;
     const { order, isError } = this.state;
-    console.log(newseat);
+
     return (
       <Form className="order-ticket-form" onSubmit={submitForm}>
         <Row>

@@ -15,9 +15,9 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
 /* ENDPOINTS */
-app.use('/', testimonialsRoutes); // add testimonials routes to server
-app.use('/', concertsRoutes); // add concerts routes to server
-app.use('/', seatsRoutes); // add seats routes to server
+app.use('/api', testimonialsRoutes); // add testimonials routes to server
+app.use('/api', concertsRoutes); // add concerts routes to server
+app.use('/api', seatsRoutes); // add seats routes to server
 
 /* Serve STATIC files from React App */
 app.use(express.static(path.join(__dirname, '/client/build')));

@@ -30,24 +30,19 @@ export const addSeat = payload => ({ payload, type: ADD_SEAT });
 
 export const loadSeatsRequest = () => {
   return async dispatch => {
-    // console.log('test loadSeatsRequest');
     dispatch(startRequest({ name: 'LOAD_SEATS' }));
     try {
-
       const res = await axios.get(`${API_URL}/seats`);
       dispatch(loadSeats(res.data));
       dispatch(endRequest({ name: 'LOAD_SEATS' }));
-
     } catch(e) {
       dispatch(errorRequest({ name: 'LOAD_SEATS', error: e.message }));
     }
-
   };
 };
 
 export const addSeatRequest = (seat) => {
   return async dispatch => {
-
     dispatch(startRequest({ name: 'ADD_SEAT' }));
     try {
       const res = await axios.post(`${API_URL}/seats`, seat);
@@ -56,12 +51,10 @@ export const addSeatRequest = (seat) => {
     } catch (e) {
       dispatch(errorRequest({ name: 'ADD_SEAT', error: e.response.data.message }));
     }
-
   };
 };
 
 /* INITIAL STATE */
-
 const initialState = {
   data: [],
   requests: [],
@@ -69,7 +62,6 @@ const initialState = {
 };
 
 /* REDUCER */
-
 export default function reducer(statePart = initialState, action = {}) {
   switch (action.type) {
     case LOAD_SEATS:

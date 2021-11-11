@@ -1,6 +1,5 @@
 import React from 'react';
 import { Row, Col } from 'reactstrap';
-
 import './Concert.scss';
 
 const Concert = ({ performer, price, genre, day, image }) => (
