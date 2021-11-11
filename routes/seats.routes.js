@@ -31,17 +31,18 @@ router.route('/seats').post((req, res) => {
 
   }
   else if (db.seats.some(item => (item.day == day && item.seat == seat))) {
-    res.status(400).send(`The slot ${seat} is already taken...`);
+    res.status(400).json({ message: `Request failed: the slot ${seat} is already taken...` });
   }
   else {
-    db.seats.push({
+    const newSeat = {
       id: nextId,
       day: day,
       seat: seat,
       client: client,
       email: email,
-    });
-    res.json({ message: 'OK. Seat added' });
+    };
+    db.seats.push(newSeat);
+    res.json({ message: 'OK. Seat added', seat: newSeat });
   }
 });
 

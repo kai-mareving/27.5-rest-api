@@ -4,6 +4,7 @@ import { API_URL } from '../config';
 /* SELECTORS */
 export const getSeats = ({ seats }) => seats.data;
 export const getRequests = ({ seats }) => seats.requests;
+export const getNewSeat = ({ seats }) => seats.seat;
 
 /* ACTIONS */
 
@@ -29,12 +30,11 @@ export const addSeat = payload => ({ payload, type: ADD_SEAT });
 
 export const loadSeatsRequest = () => {
   return async dispatch => {
-
+    // console.log('test loadSeatsRequest');
     dispatch(startRequest({ name: 'LOAD_SEATS' }));
     try {
 
-      let res = await axios.get(`${API_URL}/seats`);
-      await new Promise((resolve) => resolve());
+      const res = await axios.get(`${API_URL}/seats`);
       dispatch(loadSeats(res.data));
       dispatch(endRequest({ name: 'LOAD_SEATS' }));
 
@@ -50,14 +50,11 @@ export const addSeatRequest = (seat) => {
 
     dispatch(startRequest({ name: 'ADD_SEAT' }));
     try {
-
-      let res = await axios.post(`${API_URL}/seats`, seat);
-      await new Promise((resolve) => resolve());
+      const res = await axios.post(`${API_URL}/seats`, seat);
       dispatch(addSeat(res));
       dispatch(endRequest({ name: 'ADD_SEAT' }));
-
-    } catch(e) {
-      dispatch(errorRequest({ name: 'ADD_SEAT', error: e.message }));
+    } catch (e) {
+      dispatch(errorRequest({ name: 'ADD_SEAT', error: e.response.data.message }));
     }
 
   };
@@ -68,6 +65,7 @@ export const addSeatRequest = (seat) => {
 const initialState = {
   data: [],
   requests: [],
+  seat: null,
 };
 
 /* REDUCER */
@@ -77,7 +75,7 @@ export default function reducer(statePart = initialState, action = {}) {
     case LOAD_SEATS:
       return { ...statePart, data: [...action.payload] };
     case ADD_SEAT:
-      return { ...statePart, data: [...statePart.data, action.payload] }
+      return { ...statePart, data: [...statePart.data, action.payload], seat: action.payload.data.seat }
     case START_REQUEST:
       return { ...statePart, requests: {...statePart.requests, [action.payload.name]: { pending: true, error: null, success: false }} };
     case END_REQUEST:

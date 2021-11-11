@@ -55,7 +55,7 @@ jspm_packages/
 /coverage
 
 # production
-/build
+#/build
 
 # Snowpack dependency directory (https://snowpack.dev/)
 web_modules/

@@ -1,7 +1,5 @@
 import React from 'react';
 import { Button, Progress, Alert } from 'reactstrap';
-//ASK: why this import below is needed if loadSeats() is already available in this component?
-import { loadSeats } from '../../../redux/seatsRedux';
 import './SeatChooser.scss';
 
 class SeatChooser extends React.Component {
@@ -9,11 +7,11 @@ class SeatChooser extends React.Component {
   componentDidMount() {
     const { loadSeats } = this.props;
     loadSeats();
-    setInterval(loadSeats(), 120000);
+    this.setState({ interval: setInterval(() => loadSeats(), 30*1000) });
   }
 
-  componentWillUnmount(){
-    clearInterval(loadSeats());
+  componentWillUnmount() {
+    clearInterval(this.state.interval);
   }
 
   isTaken = (seatId) => {
