@@ -14,13 +14,13 @@ app.use(cors());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
+app.use(express.static(path.join(__dirname, '/client/build')));
 /* ENDPOINTS */
 app.use('/api', testimonialsRoutes); // add testimonials routes to server
 app.use('/api', concertsRoutes); // add concerts routes to server
 app.use('/api', seatsRoutes); // add seats routes to server
 
-/* Serve STATIC files from React App */
-app.use(express.static(path.join(__dirname, '/client/build')));
+// Serve STATIC files from React App
 app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, '/client/build/index.html'));
 });
