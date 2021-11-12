@@ -4,7 +4,8 @@
   "private": true,
   "engines": {
     "node": "v14.x",
-    "npm": "v7.x"
+    "npm": "v7.x",
+    "express": "v4.17.1"
   },
   "scripts": {
     "start": "react-scripts start",

@@ -4,7 +4,8 @@
   "description": "Simple REST API server app",
   "main": "server.js",
   "engines": {
-    "node": "v14.x"
+    "node": "v14.x",
+    "express": "v4.17.1"
   },
   "scripts": {
     "start": "node server.js",
